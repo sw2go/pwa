@@ -26,13 +26,31 @@ function send() {
 }
 
 if ('serviceWorker' in navigator) {
+
     const wb = new Workbox('./service-worker.js');
+
+    const btnUpdate: HTMLButtonElement = document.querySelector("#btnUpdate");
+
+    wb.addEventListener("waiting", event => {
+        console.log('waiting');
+        btnUpdate.disabled = false;
+        btnUpdate.addEventListener("click", () => {
+            wb.addEventListener("controlling", event => {
+                console.log('controlling');
+                window.location.reload();
+            });
+            wb.messageSW({ type: "SKIP_WAITING" });
+        });        
+    });
+
     wb.register();
     
     wb.messageSW({type: SWM.GET_VERSION}).then(version => {
         divInfo.innerText += "ServiceWorker: " + version;
         console.log('Service Worker version:', version);
     });
+
+
 
 
 
