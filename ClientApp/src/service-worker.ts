@@ -9,7 +9,7 @@ import { SWM } from './service-worker-messages';
 // @ts-ignore: __WB_MANIFEST is a placeholder filled by workbox-webpack-plugin with the list of dependecies to be cached
 const assetsToCache = self.__WB_MANIFEST;
 
-const SW_VERSION = '1.0.10';
+const SW_VERSION = '1.0.1';
 
 self.addEventListener('message', (event) => {
     if (event.data) {

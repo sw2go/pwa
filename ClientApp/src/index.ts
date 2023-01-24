@@ -33,7 +33,7 @@ if ('serviceWorker' in navigator) {
 
     wb.addEventListener("waiting", event => {
         console.log('waiting');
-        update.disabled = false;
+        update.classList.remove("hide");
         update.addEventListener("click", () => {
             wb.addEventListener("controlling", event => {
                 console.log('controlling');
@@ -49,7 +49,7 @@ if ('serviceWorker' in navigator) {
         console.log('Service Worker version:', version);
     });
 
-    setTimeout(() =>{ 
+    setInterval(() => { 
         console.log("check");
         wb.update().then(() => {
             console.log("check resolve");
