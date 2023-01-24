@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>ts_net_core</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup> <!-- do not copy client source to output folder -->
+    <Content Remove="ClientApp\**">     
+    </Content> 
+  </ItemGroup>
+  <!-- ensure client build (to wwwroot) before publish -->
+  <Target Name="BuildClientAssets_BeforePublishing" BeforeTargets="BeforePublish">
+    <Exec Command="npm install" WorkingDirectory="./ClientApp" />
+    <Exec Command="npm run release" WorkingDirectory="./ClientApp" />
+  </Target>
+</Project>
