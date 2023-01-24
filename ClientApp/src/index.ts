@@ -29,12 +29,12 @@ if ('serviceWorker' in navigator) {
 
     const wb = new Workbox('./service-worker.js');
 
-    const btnUpdate: HTMLButtonElement = document.querySelector("#btnUpdate");
+    const update: HTMLButtonElement = document.querySelector("#btnUpdate");
 
     wb.addEventListener("waiting", event => {
         console.log('waiting');
-        btnUpdate.disabled = false;
-        btnUpdate.addEventListener("click", () => {
+        update.disabled = false;
+        update.addEventListener("click", () => {
             wb.addEventListener("controlling", event => {
                 console.log('controlling');
                 window.location.reload();
@@ -44,7 +44,6 @@ if ('serviceWorker' in navigator) {
     });
 
     wb.register();
-    
     wb.messageSW({type: SWM.GET_VERSION}).then(version => {
         divInfo.innerText += "ServiceWorker: " + version;
         console.log('Service Worker version:', version);
