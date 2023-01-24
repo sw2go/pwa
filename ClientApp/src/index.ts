@@ -6,23 +6,30 @@ const divMessages: HTMLDivElement = document.querySelector("#divMessages");
 const tbMessage: HTMLInputElement = document.querySelector("#tbMessage");
 const btnSend: HTMLButtonElement = document.querySelector("#btnSend");
 const divInfo: HTMLDivElement = document.querySelector("#divInfo");
+const imgStatus: HTMLImageElement = document.querySelector("#imgStatus");
 
 btnSend.addEventListener("click", send);
 
-function send() {
+async function send() {
+    try {
+        imgStatus.src = "./assets/cloud-update.svg";
+        let response = await fetch(`api/data/${tbMessage.value}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+            },
+        });
 
-    let text = tbMessage.value;
-
-    let url = `api/data/${text}`;
-
-    fetch(url, {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json',
-        },
-    })
-    .then(r => r.text())
-    .then(txt => divMessages.innerHTML += txt );
+        if (response.headers.has("offline")) {
+            console.log("offline");
+            imgStatus.src = "./assets/cloud-offline.svg";
+        } else {
+            imgStatus.src = "./assets/cloud-online.svg";
+            divMessages.innerHTML += await response.text();
+        }
+    } catch (err) {
+        console.log("send", err);
+    }
 }
 
 if ('serviceWorker' in navigator) {

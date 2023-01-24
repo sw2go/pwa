@@ -76,19 +76,28 @@ const testRoute = ({url, request, event}) => {
 };
 
 const testHandler = async ({url, request, event, params}) => {
+    try {
+        const response = await fetch("./test.html", {
+            method: 'GET',
+            cache: "no-store",
+            headers: {
+                'Accept': 'text/html',
+            },
+        });
+        const responseBody = await response.text();
+        return new Response(`${responseBody}`, {
+            headers: response.headers,
+        });        
+    } catch (e)
+    {   
+        console.log("testhandler", e);
+        return new Response(null, { status: 404, statusText: "offline", headers: {  
+            offline: '1'  
+        }})
+    }
 
-    const response = await fetch("./test.html", {
-        method: 'GET',
-        cache: "no-store",
-        headers: {
-            'Accept': 'text/html',
-        },
-    });
 
-    const responseBody = await response.text();
-    return new Response(`${responseBody}`, {
-        headers: response.headers,
-    });
+
 };
 
 registerRoute(testRoute, testHandler);
