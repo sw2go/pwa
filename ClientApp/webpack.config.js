@@ -34,9 +34,9 @@ module.exports = {
         use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       { 
-        test: /\.(png|jpg|gif)$/,   
+        test: /(\.(png|jpg|gif)|manifest.json)$/,   
         type: 'asset/resource'
-      }   
+      }
     ],
   },
   plugins: [
@@ -50,6 +50,7 @@ module.exports = {
     new CopyPlugin({                // to copy existing resources to dist
       patterns: [
         { from: "src/assets/*.*" , to: "assets/[name][ext]" },
+        { from: "src/manifest.*" , to: "[name][ext]" },
       ],
     }),
     new WorkboxPlugin.InjectManifest({
