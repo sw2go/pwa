@@ -5,6 +5,7 @@ import { SWM } from './service-worker-messages';
 const divMessages: HTMLDivElement = document.querySelector("#divMessages");
 const tbMessage: HTMLInputElement = document.querySelector("#tbMessage");
 const btnSend: HTMLButtonElement = document.querySelector("#btnSend");
+const divInfo: HTMLDivElement = document.querySelector("#divInfo");
 
 btnSend.addEventListener("click", send);
 
@@ -29,6 +30,7 @@ if ('serviceWorker' in navigator) {
     wb.register();
     
     wb.messageSW({type: SWM.GET_VERSION}).then(version => {
+        divInfo.innerText += "ServiceWorker: " + version;
         console.log('Service Worker version:', version);
     });
 
