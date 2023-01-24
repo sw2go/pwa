@@ -49,10 +49,11 @@ if ('serviceWorker' in navigator) {
         console.log('Service Worker version:', version);
     });
 
-
-
-
-
+    setTimeout(() =>{ 
+        console.log("check");
+        wb.update().then(() => {
+            console.log("check resolve");
+    }).catch(() => console.log("check falil"))}, 10000);
 
 }
 
