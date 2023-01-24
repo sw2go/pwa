@@ -38,7 +38,7 @@ precacheAndRoute(assetsToCache);
 // Runtime caching
 
 const matchCb = ({url, request, event}) => {
-    return url.pathname === '/api/data/3';
+    return url.pathname === './api/data/3';
 };
 
 const handlerCb = async ({url, request, event, params}) => {
