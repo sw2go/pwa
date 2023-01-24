@@ -9,7 +9,7 @@ import { SWM } from './service-worker-messages';
 // @ts-ignore: __WB_MANIFEST is a placeholder filled by workbox-webpack-plugin with the list of dependecies to be cached
 const assetsToCache = self.__WB_MANIFEST;
 
-const SW_VERSION = '1.0.8';
+const SW_VERSION = '1.0.10';
 
 self.addEventListener('message', (event) => {
     if (event.data) {
@@ -66,11 +66,31 @@ const handlerCb = async ({url, request, event, params}) => {
     });
 };
 
-registerRoute(matchCb, handlerCb);
+//registerRoute(matchCb, handlerCb);
 
 
+const testRoute = ({url, request, event}) => {
+    const match = /\/api\/data.+$/i.test(url.pathname);
+    console.log(`match ${match}  ${url.pathname}`);
+    return  match;
+};
 
+const testHandler = async ({url, request, event, params}) => {
 
+    const response = await fetch("./test.html", {
+        method: 'GET',
+        headers: {
+            'Accept': 'text/html',
+        },
+    });
+
+    const responseBody = await response.text();
+    return new Response(`${responseBody}`, {
+        headers: response.headers,
+    });
+};
+
+registerRoute(testRoute, testHandler);
 
 
 

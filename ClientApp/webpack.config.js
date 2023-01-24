@@ -34,7 +34,7 @@ module.exports = {
         use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       { 
-        test: /(\.(png|jpg|gif)|manifest.json)$/,   
+        test: /(\.(png|jpg|gif)|manifest.json|test.html)$/,   
         type: 'asset/resource'
       }
     ],
@@ -51,6 +51,7 @@ module.exports = {
       patterns: [
         { from: "src/assets/*.*" , to: "assets/[name][ext]" },
         { from: "src/manifest.*" , to: "[name][ext]" },
+        { from: "src/test.html" , to: "[name][ext]" },
       ],
     }),
     new WorkboxPlugin.InjectManifest({
